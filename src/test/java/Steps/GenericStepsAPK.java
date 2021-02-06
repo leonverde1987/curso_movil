@@ -6,9 +6,10 @@ import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Properties;
 import org.junit.ComparisonFailure;
+import org.openqa.selenium.By;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
-public class GenericSteps extends genericGrid{
+public class GenericStepsAPK extends genericGrid{
     
     /**
      * Este método nos ayuda a regresar el nombre del navegador.
@@ -31,24 +32,7 @@ public class GenericSteps extends genericGrid{
     }
     
     
-    /**
-     * Esté Método nos ayuda a dirigir el driver a una URL en especifico.
-     * @param driver Elemento WebDriver de la prueba.
-     * @param contador Es el controlador de pasos ejecutados.
-     * @param Config Es el archivo de configuración de la prueba.
-     * @param Escenario Es el nombre del caso de prueba.
-     * @throws FileNotFoundException Cacha cualquier excepción en la ejecución.
-     * @throws InterruptedException Cacha si el archivo Config no existe.
-     */
-    public void ingresarAURL(RemoteWebDriver driver, int contador, Properties Config, String Escenario, String navegador) throws FileNotFoundException, InterruptedException {
-        try{
-            this.abrirURl(driver, Config.getProperty("urlWEB"));
-            this.capturaDriver(driver, Config.getProperty("rutaEvidencia"), contador, Escenario, navegador);
-        }catch(InterruptedException e){
-            System.out.println("Mensaje: "+e);
-        }
-        
-    }
+    
     
     /**
      * Esté metodo nos ayuda a cerrar el driver.
@@ -111,7 +95,7 @@ public class GenericSteps extends genericGrid{
     }
 
     /**
-     * Esté método nos ingresa contenido en un componente de texto.
+     * Esté método realiza login en la APK.
      * @param driver Elemento WebDriver de la prueba.
      * @param usuario Es el valor del texto que se va ingresar al componente.
      * @param contador Es el controlador de pasos ejecutados.
@@ -123,15 +107,23 @@ public class GenericSteps extends genericGrid{
      * @throws FileNotFoundException Cacha cualquier excepción en la ejecución.
      * @throws InterruptedException Cacha si el archivo Config no existe. 
      */
-    public void loginWeb(RemoteWebDriver driver, String usuario, String contrasena, 
+    public void loginApk(RemoteWebDriver driver, String usuario, String contrasena, 
     		int contador, Properties Config, Properties Elementos, String Escenario, String navegador) throws FileNotFoundException, InterruptedException {
-        
-        this.click(driver, "xpath", Elementos.getProperty("btn_sigin"));
+        try{
         this.dormirSeg(3);
-        this.ingresarTexto(driver, "xpath", Elementos.getProperty("ipt_usuario"), usuario);
-        this.ingresarTexto(driver, "xpath", Elementos.getProperty("ipt_contrasena"), contrasena);
-        this.click(driver, "xpath", Elementos.getProperty("btn_conexion"));
+
+        this.ingresarTextoAPK(driver, "xpath", Elementos.getProperty("ipt_usuario"), usuario);
+        this.ingresarTextoAPK(driver, "xpath", Elementos.getProperty("ipt_contrasena"), contrasena);
         this.capturaDriver(driver, Config.getProperty("rutaEvidencia"), contador, Escenario, navegador);
+        this.clickAPK(driver, "xpath", Elementos.getProperty("btn_conexion"));
+
+//        driver.findElementByXPath("//*[@class = 'android.widget.EditText' and (@text = 'INGRESA USUARIO' or . = 'INGRESA USUARIO') and @resource-id = 'com.mate_app:id/txtUsuario']").sendKeys("JOSY");
+//        driver.findElementByXPath("//*[@class = 'android.widget.Button' and (@text = 'INGRESAR' or . = 'INGRESAR') and @resource-id = 'com.mate_app:id/btnLogin']").sendKeys("Test1234");
+//        driver.findElementByXPath("//*[@class = 'android.widget.Button' and (@text = 'INGRESAR' or . = 'INGRESAR') and @resource-id = 'com.mate_app:id/btnLogin']").click();
+
+        }catch(Exception e){
+            System.out.println(e);
+        }
     }
     
     
@@ -151,7 +143,7 @@ public class GenericSteps extends genericGrid{
         this.dormirSeg(4);
         String msj = "";
         try{
-            msj = this.AssertMsjElemento(driver, "xpath", mensajeActual, Elementos.getProperty("lnk_ErrorLogin"));
+            msj = this.AssertMsjElemento(driver, "xpath", mensajeActual, Elementos.getProperty("lnk_mensaje"));
         }catch(ComparisonFailure e){
             msj = "Fallido, Resultado Esperado: "+e;
         }

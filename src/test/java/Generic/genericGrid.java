@@ -128,6 +128,42 @@ public class genericGrid extends evidenceGrid {
             return driver;
         }
     
+    /**
+     * Este método nos ayuda abrir una aplicación móvil en un dispositivo.
+     * @param navegador Es el nombre dle navegador que vamos a levantar.
+     * @param config Es el acrhico de configuración properties.
+     * @return driver Es el RemoteWebDriver con el navegador abierto.
+     * @throws MalformedURLException Cuando no encunetra la ruta del driver.
+     * @throws InterruptedException Cuando no se puede iniciar el driver.
+     */
+    public RemoteWebDriver abrirAppAppium(String navegador, Properties config) throws MalformedURLException, InterruptedException{
+        RemoteWebDriver driver = null;
+        URL url=null;
+        try{
+        
+            DesiredCapabilities capabilities = new DesiredCapabilities();
+            capabilities.setPlatform(Platform.WINDOWS);
+            
+            
+            if("motorolaOneVision".equals(navegador)){
+                DesiredCapabilities capabilitie =new DesiredCapabilities();
+                capabilitie.setCapability("deviceName", navegador);
+                capabilitie.setCapability("platformVerion", "10");
+                capabilitie.setCapability("platformName", "Android");
+                capabilitie.setCapability("device", "ZY326LRQHS");
+                capabilitie.setCapability("app", config.getProperty("urlAPP"));
+                url = new URL(config.getProperty("urlAPPIUM"));
+                driver = new RemoteWebDriver(url, capabilitie);
+            }
+            
+            
+        }catch(Exception e){
+            System.out.println(e);
+        }
+
+            return driver;
+        }
+    
     
     /**
      * Este método levanta el HUB de selenium grid y los nodos para cada navegador. 
@@ -287,7 +323,16 @@ public class genericGrid extends evidenceGrid {
         js.executeScript("arguments[0].click()", el);
     }
     
-
+    /***
+     * El método nos ayuda a dar clic a un elemento de una aplicación m{ovil.
+     * @param driver es el webDriver en el que se ejecuta la pruebas automatizada.
+     * @param findby Es el tipo de selector selenium id, name o XPATH.
+     * @param Elemento Es el selector selenium que se le va a dar Clic.
+     * @throws InterruptedException 
+     */
+    public void clickAPK(RemoteWebDriver driver, String findby, String Elemento) throws InterruptedException{
+        driver.findElementByXPath(Elemento).click();
+    }
     /***
      * El método nos ayuda a ingresar texto a un elemento.
      * @param driver Es el webDriver en el que se ejecuta la pruebas automatizada.
@@ -298,6 +343,17 @@ public class genericGrid extends evidenceGrid {
     public void ingresarTexto(RemoteWebDriver driver, String findby, String Elemento, String Texto){
         WebElement elemen = this.driverWait(driver, findby, Elemento);
         elemen.sendKeys(Texto);
+    }
+    
+    /***
+     * El método nos ayuda a ingresar texto a un elemento de una APK.
+     * @param driver Es el webDriver en el que se ejecuta la pruebas automatizada.
+     * @param findby Es el tipo de selector selenium id, name o XPATH.
+     * @param Elemento Es el selector selenium al que le vamos agregar texto.
+     * @param Texto Es el texto que se va ingresar al campo.
+     */
+    public void ingresarTextoAPK(RemoteWebDriver driver, String findby, String Elemento, String Texto){
+        driver.findElementByXPath(Elemento).sendKeys(Texto);
     }
 
     /***

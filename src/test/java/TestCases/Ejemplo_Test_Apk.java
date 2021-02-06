@@ -16,15 +16,16 @@ import org.junit.Before;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import Steps.GenericSteps;
+import Steps.GenericStepsAPK;
 import Steps.LoginSteps;
 import Steps.MenusNavegadorSteps;
 
 
 
-public class Ejemplo_Test_Web{
+public class Ejemplo_Test_Apk{
     
     //STEPS
-    public GenericSteps genericSteps = new GenericSteps();
+    public GenericStepsAPK genericSteps = new GenericStepsAPK();
     public LoginSteps loginSteps = new LoginSteps();
     public MenusNavegadorSteps menusNavegadorSteps = new MenusNavegadorSteps();
 
@@ -57,13 +58,13 @@ public class Ejemplo_Test_Web{
     public void PrepararEjecucion() throws FileNotFoundException, MalformedURLException, InterruptedException{
     
         Config = genericSteps.getPropetiesFile("configuracion\\configuracion.properties");
-        UILogin = genericSteps.getPropetiesFile("configuracion\\uielements\\loginPage.properties");
-        DataDriven = genericSteps.ObtenerDatos("configuracion\\datos\\dt_login.csv");
+        UILogin = genericSteps.getPropetiesFile("configuracion\\uielements\\loginPageAPK.properties");
+        DataDriven = genericSteps.ObtenerDatos("configuracion\\datos\\dt_login_apk.csv");
         contador = 1;
         RutaEvidencia = Config.getProperty("rutaEvidencia");
         Resultado = "Fallido";
-        Navegador = Config.getProperty("Navegador");
-        driver = genericSteps.openGridBrowser(Navegador, Config);
+        Navegador = "motorolaOneVision";
+        driver = genericSteps.abrirAppAppium(Navegador, Config);
         ResultadoGlobal = "Exitoso";
     }
     
@@ -78,17 +79,18 @@ public class Ejemplo_Test_Web{
             String mensaje = filaDatos[2];
             try{
 
-                    Escenario = "LGN_Login_Web "+Repeticion;
+                    Escenario = "LGN_Login_Apk "+Repeticion;
 
                     //Paso 1
-                    Pasos.add(contador+".- Abrir navegador en la URL: "+Config.getProperty("urlWEB"));
-                    genericSteps.ingresarAURL(driver, contador, Config, Escenario, Navegador);
-                    
+                    Pasos.add(contador+".- Abrir navegador en la Demo_Apk.apk");
+                    this.loginSteps.capturaDriver(driver, RutaEvidencia, contador, Escenario, Navegador);
+//                    genericSteps.ingresarAURL(driver, contador, Config, Escenario, Navegador);
+//                    
                     //Paso 2
                     contador++;
                     Pasos.add(contador+".- Ingresamos Usuario: "+usuario+" y Contraseña:"+pass);
-                    genericSteps.loginWeb(driver, usuario, pass, contador, Config, UILogin, Escenario, Navegador);
-                    
+                    genericSteps.loginApk(driver, usuario, pass, contador, Config, UILogin, Escenario, Navegador);
+//                    
                     //Paso 3
                     contador++;
                     Pasos.add(contador+".- Válidar mensaje: "+mensaje+".");

@@ -19,8 +19,8 @@ import org.junit.runners.Suite;
  * @author TestingIT
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({TestCases.Ejemplo_Test_Web.class})
-public class Test_Regresion_Web {
+@Suite.SuiteClasses({TestCases.Ejemplo_Test_Apk.class})
+public class Test_Regresion_APK {
 
     @BeforeClass
     public static void setUpClass() throws Exception {
@@ -29,9 +29,9 @@ public class Test_Regresion_Web {
         //Crear carpeta de evidencia
         String ruta = new Generic.evidenceGrid().creaCarpetaRepeticion();
         Config.setProperty("rutaEvidencia",ruta);
-        //Asignar navegador de ejecución
-        Config.setProperty("Navegador","chrome");
-        Config.store(new FileWriter("configuracion\\configuracion.properties"),"Cambio de Navegador a Chrome");
+//        //Asignar navegador de ejecución
+//        Config.setProperty("Navegador","chrome");
+        Config.store(new FileWriter("configuracion\\configuracion.properties"),"Cambia carpeta");
         
         //new Generic.genericGrid().leventarNodosGrid();
     }

@@ -78,7 +78,7 @@ public class evidenceGrid {
     }
     
     public String creaCarpetaRepeticion(){
-        File carpeta = new File("evidencia//"+this.fechaFormato()+"//"+this.totalArchivosMasUno(new File("evidencia//"+fechaFormato())));
+        File carpeta = new File("C://Evidencia//"+this.fechaFormato()+"//"+this.totalArchivosMasUno(new File("C://Evidencia//"+fechaFormato())));
         if (!carpeta.exists()) {
             if (carpeta.mkdirs()) {
                 System.out.println("Directorio creado");
@@ -87,7 +87,7 @@ public class evidenceGrid {
                 
             }
         }
-        return "evidencia//"+this.fechaFormato()+"//"+this.totalArchivos(new File("evidencia//"+fechaFormato()));
+        return "C://Evidencia//"+this.fechaFormato()+"//"+this.totalArchivos(new File("C://Evidencia//"+fechaFormato()));
     }
     
     public String fechaFormato(){
@@ -430,7 +430,7 @@ public class evidenceGrid {
                 printw.println("#tablatitulo { width: 50%; margin: 0 auto; -align: center;}");
                 
                 printw.println("#contenido { width: 100%; margin: 0 auto;font-size:12px;font-family: Georgia, 'Times New Roman', serif;}");
-                printw.println("#encabezado { width: 100%; margin: 0 auto; background-color: #58ACFA; color: #FF0000;}");//#2196F3;#819FF7
+                printw.println("#encabezado { width: 100%; margin: 0 auto; background-color: white; color: #FF0000;}");//#2196F3;#819FF7
                 
                 printw.println("#titulo {color: white;margin: 0;}");
                 
@@ -450,12 +450,12 @@ public class evidenceGrid {
             printw.println("<table id=\"encabezado\">");
             printw.println("<tr>");
             printw.println("<td>");
-            printw.println("<img src=\"C://ambiente//imagenes//logo.png\" width=\"115\" height=\"30\">");
+            printw.println("<img src=\"C://ambiente//imagenes//logo.png\" width=\"140\" height=\"100\">");
             printw.println("</td>");
             printw.println("<td>");
             printw.println("</td>");
             printw.println("<td>");
-            printw.println("<p align=\"right\"><img src=\"C://ambiente//imagenes//logo.png\" width=\"115\" height=\"30\"></p>");
+            printw.println("<p align=\"right\"><img src=\"C://ambiente//imagenes//logo.png\" width=\"140\" height=\"100\"></p>");
             printw.println("</td>");
             printw.println("</tr>");
             
