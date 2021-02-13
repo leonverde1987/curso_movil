@@ -19,6 +19,7 @@ import Steps.GenericSteps;
 import Steps.GenericStepsAPK;
 import Steps.LoginSteps;
 import Steps.MenusNavegadorSteps;
+import org.openqa.selenium.UnsupportedCommandException;
 
 
 
@@ -102,6 +103,9 @@ public class Ejemplo_Test_Apk{
             }catch(InterruptedException e){
                 Resultado = "Ejecución Fallida: "+e;
                 genericSteps.capturarEvidencia(driver, Config, contador, Escenario, Navegador);
+            }catch(UnsupportedCommandException e){
+                Resultado = "Ejecución Fallida: "+e;
+                genericSteps.capturarEvidencia(driver, Config, contador, Escenario, Navegador);
             }finally{
                 genericSteps.finalizarTestCase(driver, Escenario, Resultado, contador, Pasos, RutaEvidencia, Config.getProperty("Modulo"), Config.getProperty("Version"), Navegador);
                 contador=0;
@@ -114,6 +118,6 @@ public class Ejemplo_Test_Apk{
 
     @After
     public void cerrarTest(){
-        genericSteps.cerrarNavegador(driver);
+        driver.quit();
     }   
 }
