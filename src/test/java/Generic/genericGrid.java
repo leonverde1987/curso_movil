@@ -242,7 +242,7 @@ public class genericGrid extends evidenceGrid {
                 }
             }
             //Generamos PDF
-            this.crearPDF(Escenario, Resultado, contador, Pasos, RutaEvidencia, Modulo, Version, navegador);
+            //this.crearPDF(Escenario, Resultado, contador, Pasos, RutaEvidencia, Modulo, Version, navegador);
             //Generamos HTML
             this.crearHTML(Escenario, Resultado, contador, Pasos, RutaEvidencia, Modulo, Version, navegador);
 
@@ -395,6 +395,18 @@ public class genericGrid extends evidenceGrid {
         return texto;
     }
     
+    /***
+     * El método obtiene el texto de un objeto móvil.
+     * @param driver es el webDriver en el que se ejecuta la pruebas automatizada.
+     * @param findby Es el tipo de selector selenium id, name o XPATH.
+     * @param Elemento Es el selector selenium.
+     * @return Regresa el texto del objeto o un vacio en caso de no encontrar el findby.
+     */
+    public String obtenerTextoMovil(RemoteWebDriver driver, String findby, String Elemento){
+        String texto = "";
+        texto = driver.findElement(By.xpath(Elemento)).getText();
+        return texto;
+    }
     
     //*********************************************************************************************************************************
     //*********************************************************************************************************************************
@@ -463,6 +475,7 @@ public class genericGrid extends evidenceGrid {
     public void bajarScroll(RemoteWebDriver driver) throws InterruptedException {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("window.scrollBy(0,1000)");
+        Thread.sleep(10000);
     }
     
     /**
@@ -575,6 +588,29 @@ public class genericGrid extends evidenceGrid {
         try{
             this.dormirSeg(1);
             Assert.assertEquals(this.obtenerTexto(driver, findby, Elemento), msjActual);
+            msj = "Exitoso";
+        }catch(AssertionError e){
+            System.out.println("Mensaje Assert Fail: "+e);
+            msj = "Fallido, Reusltado Esperado: "+e;
+        }catch(Exception e){
+            System.out.println("Ejecucion Fallida: "+e);
+            msj = "Ejecucion Fallida, Reusltado Esperado: "+e;
+        }
+        return msj;
+    }
+    
+    /**
+     * En este método vamos a validar que dos mensajes sean iguales de un elemento móvil.
+     * @param driver Es el remoteWebDriver donde se ejecuta la prueba. 
+     * @param findby Es el tipo de selector selenium id, name o XPATH.
+     * @param msjActual Es el valr del texto que se compara.
+     * @param Elemento Es el elemento del que se va a comparr el texto.
+     */
+    public String AssertMsjElementoMovil(RemoteWebDriver driver, String findby, String msjActual, String Elemento) throws InterruptedException{
+        String msj = "";
+        try{
+            this.dormirSeg(1);
+            Assert.assertEquals(this.obtenerTextoMovil(driver, findby, Elemento), msjActual);
             msj = "Exitoso";
         }catch(AssertionError e){
             System.out.println("Mensaje Assert Fail: "+e);
